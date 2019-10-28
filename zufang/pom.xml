@@ -62,6 +62,11 @@
       <version>${junit.version}</version>
       <scope>test</scope>
     </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-test</artifactId>
+      <version>4.3.0.RELEASE</version>
+    </dependency>
     <!-- 日志处理 -->
     <dependency>
       <groupId>org.slf4j</groupId>
@@ -136,6 +141,12 @@
       <artifactId>spring-aspects</artifactId>
       <version>${spring.version}</version>
     </dependency>
+    <!--？-->
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-tx</artifactId>
+      <version>4.3.0.RELEASE</version>
+    </dependency>
     <!-- JSP相关 -->
     <dependency>
       <groupId>jstl</groupId>
@@ -171,22 +182,28 @@
       <artifactId>commons-io</artifactId>
       <version>${commons-io.version}</version>
     </dependency>
+      <dependency>
+          <groupId>cn.kgc</groupId>
+          <artifactId>zufang</artifactId>
+          <version>1.0-SNAPSHOT</version>
+          <scope>test</scope>
+      </dependency>
 
-    <!--  <dependency>
-        <groupId>org.junit.jupiter</groupId>
-        <artifactId>junit-jupiter-api</artifactId>
-        <version>5.5.2</version>
-      </dependency>
-      <dependency>
-        <groupId>org.junit.jupiter</groupId>
-        <artifactId>junit-jupiter-engine</artifactId>
-        <version>5.5.2</version>
-      </dependency>
-      <dependency>
-        <groupId>org.apiguardian</groupId>
-        <artifactId>apiguardian-api</artifactId>
-        <version>1.1.0</version>
-      </dependency>-->
+      <!--  <dependency>
+          <groupId>org.junit.jupiter</groupId>
+          <artifactId>junit-jupiter-api</artifactId>
+          <version>5.5.2</version>
+        </dependency>
+        <dependency>
+          <groupId>org.junit.jupiter</groupId>
+          <artifactId>junit-jupiter-engine</artifactId>
+          <version>5.5.2</version>
+        </dependency>
+        <dependency>
+          <groupId>org.apiguardian</groupId>
+          <artifactId>apiguardian-api</artifactId>
+          <version>1.1.0</version>
+        </dependency>-->
   </dependencies>
 
   <build>

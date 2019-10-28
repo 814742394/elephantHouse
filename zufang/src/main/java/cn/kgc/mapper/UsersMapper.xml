@@ -209,4 +209,13 @@
       ISADMIN = #{isadmin,jdbcType=INTEGER}
     where ID = #{id,jdbcType=INTEGER}
   </update>
+  <insert id="insertTest" parameterType="cn.kgc.entity.Users" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into users (ID, NAME, PASSWORD,
+    TELEPHONE, ISADMIN)
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR},
+    #{telephone,jdbcType=VARCHAR}, #{isadmin,jdbcType=INTEGER})
+  </insert>
 </mapper>

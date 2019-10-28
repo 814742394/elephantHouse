@@ -11,6 +11,28 @@ public class Users {
 
     private Integer isadmin;
 
+    @Override
+    public String toString() {
+        return "Users{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", password='" + password + '\'' +
+                ", telephone='" + telephone + '\'' +
+                ", isadmin=" + isadmin +
+                '}';
+    }
+
+    public Users() {
+    }
+
+    public Users(Integer id, String name, String password, String telephone, Integer isadmin) {
+        this.id = id;
+        this.name = name;
+        this.password = password;
+        this.telephone = telephone;
+        this.isadmin = isadmin;
+    }
+
     public Integer getId() {
         return id;
     }

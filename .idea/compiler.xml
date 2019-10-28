@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="u3exam" />
+        <module name="zufang" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="AppInfoSystem" target="1.8" />
+      <module name="easyUI1" target="1.8" />
+      <module name="InvoicingSystem" target="1.8" />
+      <module name="InvoicingSystem2" target="1.8" />
+      <module name="mvn2" target="1.5" />
+      <module name="mvn3" target="1.7" />
+      <module name="mvn5" target="1.7" />
+      <module name="mvn6" target="1.7" />
+      <module name="mvn7" target="1.7" />
+      <module name="mvn8" target="1.7" />
+      <module name="mybatis" target="1.7" />
+      <module name="testDemo" target="1.8" />
+      <module name="testDemo2" target="1.5" />
+      <module name="toursInfo" target="1.8" />
+      <module name="u3exam" target="1.7" />
+      <module name="u3exam2" target="1.8" />
+      <module name="u3test" target="1.8" />
+      <module name="u4sys" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

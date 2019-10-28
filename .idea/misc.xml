@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ExternalStorageConfigurationManager" enabled="true" />
+  <component name="FUSUsageTrigger">
+    <session id="-1589959523">
+      <usages-collector id="statistics.spring.core.usages.trigger">
+        <counts>
+          <entry key="fixes.SpringFacetInspection.AddFacetFix" value="1" />
+        </counts>
+      </usages-collector>
+    </session>
+  </component>
+  <component name="FrameworkDetectionExcludesConfiguration">
+    <file type="web" url="file://$PROJECT_DIR$/../u3exam" />
+    <file type="web" url="file://$PROJECT_DIR$/AppInfoSystem" />
+    <file type="web" url="file://$PROJECT_DIR$/easyUI1" />
+    <file type="web" url="file://$PROJECT_DIR$/InvoicingSystem" />
+    <file type="web" url="file://$PROJECT_DIR$/InvoicingSystem2" />
+    <file type="web" url="file://$PROJECT_DIR$/mvn1" />
+    <file type="web" url="file://$PROJECT_DIR$/mvn3" />
+    <file type="web" url="file://$PROJECT_DIR$/mvn4" />
+    <file type="web" url="file://$PROJECT_DIR$/mvn5" />
+    <file type="web" url="file://$PROJECT_DIR$/mvn6" />
+    <file type="web" url="file://$PROJECT_DIR$/mvn7" />
+    <file type="web" url="file://$PROJECT_DIR$/mvn8" />
+    <file type="web" url="file://$PROJECT_DIR$/testDemo" />
+    <file type="web" url="file://$PROJECT_DIR$/u3exam2" />
+    <file type="web" url="file://$PROJECT_DIR$/u3test" />
+    <file type="web" url="file://$PROJECT_DIR$/u4sys" />
+    <file type="web" url="file://$PROJECT_DIR$/zufang" />
+  </component>
+  <component name="MavenProjectsManager">
+    <option name="originalFiles">
+      <list>
+        <option value="$PROJECT_DIR$/../u3exam/pom.xml" />
+        <option value="$PROJECT_DIR$/zufang/pom.xml" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectResources">
+    <resource url="http://mybatis.org/dtd/mybatis-3-config.dtd" location="$MAVEN_REPOSITORY$/org/mybatis/mybatis/3.2.8/mybatis-3.2.8.jar!/org/apache/ibatis/builder/xml/mybatis-3-config.dtd" />
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/out" />
+  </component>
+</project>
