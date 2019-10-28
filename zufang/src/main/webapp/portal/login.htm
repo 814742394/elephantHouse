@@ -1,0 +1,108 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3c.org/TR/1999/REC-html401-19991224/loose.dtd">
+<!-- saved from url=(0032)http://localhost:8080/HouseRent/ -->
+<HTML xmlns="http://www.w3.org/1999/xhtml">
+<HEAD><TITLE>青鸟租房 - 用户登录</TITLE>
+    <META content="text/html; charset=utf-8" http-equiv=Content-Type>
+    <META name=GENERATOR content="MSHTML 8.00.7601.17514">
+    <LINK rel=stylesheet type=text/css href="/css/style.css">
+    <link rel="stylesheet" type="text/css" href="/easyUI/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="/easyUI/themes/icon.css">
+    <link rel="stylesheet" type="text/css" href="/easyUI/css/demo.css">
+    <script src="/js/jquery.min.js"></script>
+    <!--jquery.easyui.min.js包含了easyUI中的所有插件-->
+    <script src="/js/jquery.easyui.min.js"></script>
+    <script type="text/javascript">
+        function login() {
+            $('INPUT').validatebox({
+                required: true,
+                missingMessage: "不能为空"
+            });
+
+            $('#loginForm').form('submit', {
+                url: '/portal/login_',
+                onSubmit: function () {
+                    return $('#loginForm').form('validate');
+                },
+                success: function (data) {
+                    var data = JSON.parse(data);
+                    if (data.success) {
+                        if (data.isadmin){
+                            window.location.href = "/admin/admin.html"
+                        }else {
+                            window.location.href = "/owner/guanli.html";
+                        }
+                    } else {
+                        $.messager.alert("提示", data.message,"warning");
+                        return;
+                    }
+                }
+            });
+        }
+    </script>
+    <style>
+        #header{
+            display: flex;
+            justify-content: space-between;
+        }
+        body{
+            background-color: #f0f0f0;
+        }
+    </style>
+</HEAD>
+<BODY>
+<DIV id=header class=wrap>
+    <DIV id=logo><IMG src="/images/logo.gif"></DIV>
+    <div><a style="font-size: 18px;color: #75bfff" href="/portal/list.html">以游客身份浏览</a></div>
+</DIV>
+<DIV id=regLogin class=wrap>
+    <DIV class=dialog>
+        <DIV class=box>
+            <H4>用户登录</H4>
+            <FORM id=loginForm method=post name=user>
+                <DIV class=infos>
+                    <TABLE class=field>
+                        <TBODY>
+                        <TR>
+                            <TD colSpan=2></TD>
+                        </TR>
+                        <TR>
+                            <TD class=field>用 户 名：</TD>
+                            <TD><!-- <input type="text" class="text" name="name" /> --><INPUT
+                                    id=name class=text type=text name=name></TD>
+                        </TR>
+                        <TR>
+                            <TD class=field>密　　码：</TD>
+                            <TD><!-- <input type="password" class="text" name="password" /> --><INPUT
+                                    id=password class=text type=password name=password></TD>
+                        </TR>
+                        <!--<TR>
+                            <TD class=field>记住密码：</TD>
+                            <TD>
+                                <input type="checkbox" id="remember" name="remember" value="1">
+                            </TD>
+                        </TR>-->
+                        <!--
+						<tr>
+							<td class="field">验 证 码：</td>
+							<td><input type="text" class="text verycode" name="veryCode" /></td>
+						</tr>
+						-->
+                        </TBODY>
+                    </TABLE>
+                    <DIV class=buttons><INPUT onclick='login()' value=登陆 type=button> <INPUT
+                            onclick='document.location="regs.htm"' value=注册 type=button>
+                    </DIV>
+                </DIV>
+            </FORM>
+        </DIV>
+    </DIV>
+</DIV>
+<DIV id=footer class=wrap>
+    <DL>
+        <DT>大象租房 © 2019 北大青鸟 京ICP证1000001号</DT>
+        <DD>关于我们 · 联系方式 · 意见反馈 · 帮助中心</DD>
+    </DL>
+</DIV>
+</BODY>
+</HTML>

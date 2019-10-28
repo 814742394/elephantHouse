@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <LINK rel=stylesheet type=text/css href="/css/style.css">
+    <link rel="stylesheet" type="text/css" href="/easyUI/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="/easyUI/themes/icon.css">
+    <link rel="stylesheet" type="text/css" href="/easyUI/css/demo.css">
+    <script src="/js/jquery.min.js"></script>
+    <!--jquery.easyui.min.js包含了easyUI中的所有插件-->
+    <script src="/js/jquery.easyui.min.js"></script>
+    <script type="text/javascript">
+        //退出登录
+        function logout() {
+            $.messager.confirm('系统提示', '您确定要退出本次登录吗?', function(r) {
+                if (r) {
+                    $.post("/portal/logout",function (data) {
+                        if (data.success){
+                            location.href = "/portal/login.htm";
+                        }
+                    });
+                }
+            });
+        }
+        //关闭对话框
+        function CloseDialog(dialogid){
+            $("#houseDialogForm").form('clear');
+            $(dialogid).dialog('close');
+        }
+        //修改提交表单数据
+        function SaveDialog(tableid,dialogid,url){
+            //表单异步提交添加
+            $("#houseDialogForm").form('submit',{
+                url:url,
+                onSubmit:function(){
+                    return $(this).form('validate');
+                },
+                success:function(data){
+                    var data = eval('(' + data + ')');
+                    if( data.success ){
+                        $.messager.show({
+                            title: '操作信息',
+                            msg: data.message,
+                            timeout: 2500,
+                            showType: 'slide'
+                        });
+                        $("#houseDialogForm").form('clear');
+                        $(tableid).datagrid('reload'); //刷新
+                        $(dialogid).dialog('close'); //关闭
+                    }else {
+                        $.messager.alert("操作信息","修改失败");
+                    }
+                }
+            });
+
+        }
+        //修改表单回显
+        function updateHouse(row) {
+            //打开编辑对话框
+            $("#houseDialog").dialog('open').dialog('setTitle',"编辑数据");
+            //图片回显
+            $("#updimg").attr("src","http://localhost/img/"+row.path);
+            //获得行对象的数据加载到表单中显示
+            $('#houseDialogForm').form('load',{
+                id:row.id,
+                typeId:row.typeId,
+                title:row.title,
+                description:row.description,
+                price:row.price,
+                pubdate:new Date(row.pubdate).Format("yyyy-MM-dd"),
+                floorage:row.floorage,
+                districtId:row.street.districtId,
+                streetId:row.streetId,
+                contact:row.contact,
+                houseImg:"http://localhost:80/"+row.path
+            });
+        }
+        //根据id删除
+        function delHouse(id) {
+            $.messager.confirm('确认', '您确认想要删除记录吗？', function (r) {
+                if (r) {
+                    $.post(
+                        "/owner/deleteHouse",
+                        {id: id},
+                        function (data) {
+                            $.messager.show({
+                                title: '操作信息',
+                                msg: data.message,
+                                timeout: 2500,
+                                showType: 'slide'
+                            });
+                            $("#dg").datagrid('reload'); //刷新
+                        },
+                        "json"
+                    );
+                }
+            });
+        }
+        //预加载入口
+        $(function () {
+            $('#dg').datagrid({
+                url: '/owner/getHouses',
+                pagination: true,
+                fitColumns: true,
+                fit: true,
+                toolbar: '#tb',
+                columns: [[
+                    {field: 'img', width: 150, height: 150, formatter: function (value, row, index) {
+                            return "<img src=\"http://localhost/img/"+row.path+"\" width=\"150\" height=\"150\" alt=\"图片丢失\">"
+                        }
+                    },
+                    {
+                        field: 'xx', width: 800, formatter: function (value, row, index) {
+                            var ispass;
+                            if (row.ispass==0){
+                                ispass = "审核结果：<span style='color: red'>未审核</span>";
+                            }else {
+                                ispass = "审核结果：<span style='color: green'>审核通过</span>"
+                            }
+                            var title = "<a style='font-size: 16px' href=" + row.id + "'../portal/details.htm?id='>" + row.title + "</a><br>";
+                            var adress = row.street.district.name + "-" + row.street.name + "<br>";
+                            var tel = "联系方式："+row.contact+ "<br>";
+                            return title + adress + tel + ispass;
+                        }
+                    },
+                    {
+                        field: 'upd', align: "center", width: 200, formatter: function (value, row, index) {
+                            var row = JSON.stringify(row);
+                            return "<a id=\"btn1\" href='javascript:updateHouse(" + row + ")'>修改</a>";
+                        }
+                    },
+                    {
+                        field: 'del', align: "center", width: 200, formatter: function (value, row, index) {
+                            return "<a id=\"btn2\" href=\"javascript:delHouse(" + row.id + ")\">删除</a>";
+                        }
+                    }
+                ]]
+            });
+            $('#btn1').linkbutton({
+                iconCls: 'icon-search'
+            });
+            $.post(
+                "/portal/isUserLogin",
+                function (data) {
+                    if (data.success){
+                        $("#welcom").html(data.message);
+                    }
+                }
+            );
+        })
+    </script>
+    <style>
+        #tb{
+            overflow: auto;
+        }
+        #put,#recycle,#logout{
+            float: left;
+        }
+        #username{
+            float: right;
+            padding-right: 200px;
+            font-size: 16px;
+        }
+        #footer{
+            display: flex;
+            justify-content: space-between;
+        }
+    </style>
+</head>
+
+<body class="easyui-layout">
+<div id="header" data-options="region:'north',split:true" style="height:100px;">
+    <div><img src="/images/logo.gif" alt=""></div>
+</div>
+<div id="footer" data-options="region:'south',split:true" style="height:100px;">
+    <div style="border: 1px">大象租房 © 2018 北大青鸟 京ICP证1000001号</div>
+    <div style="padding-right: 10px;border:1px">关于我们 · 联系方式 · 意见反馈 · 帮助中心</div>
+</div>
+<div data-options="region:'center'" style="padding:5px;background:#eee;">
+    <table id="dg"></table>
+</div>
+
+<div id="tb">
+    <div id="put" style="padding-right: 10px">
+        <a  href="fabu.htm" class="easyui-linkbutton" data-options="iconCls:'icon-add'">发布房屋信息</a>
+    </div>
+    <div id="recycle" style="padding-right: 10px">
+        <a  href="recycle.html" class="easyui-linkbutton" data-options="iconCls:'icon-add'">回收站</a>
+    </div>
+    <div id="logout" style="padding-right: 10px">
+        <a  href="javascript:logout()" class="easyui-linkbutton" data-options="iconCls:'icon-cancel'">退出</a>
+    </div>
+    <div id="username">欢迎:<span id="welcom"></span></div>
+</div>
+
+<div id="houseDialog" class="easyui-dialog" buttons="#AddDialogButtons"
+     style="width: 400px; height: 600px; padding: 10px 20px;" closed="true" closable="false">
+    <form id="houseDialogForm" method="post" enctype="multipart/form-data">
+        <table border="1">
+            <tr hidden>
+                <td>ID:</td>
+                <td>
+                    <input type="text" name="id" id="id">
+                </td>
+            </tr>
+            <tr>
+                <td>类型:</td>
+                <td>
+                    <input id="typeId" class="easyui-combobox" name="typeId"
+                           data-options="valueField:'id',textField:'name',url:'/owner/getAllTypes'" />
+                </td>
+            </tr>
+            <tr>
+                <td>主题:</td>
+                <td><input type="text" class="easyui-validatebox" required
+                           name="title" id="title"/></td>
+            </tr>
+            <tr>
+                <td>描述:</td>
+                <td><input type="text" class="easyui-validatebox" required
+                           name="description" id="description"/></td>
+            </tr>
+            <tr>
+                <td>价格:</td>
+                <td><input type="text" class="easyui-validatebox" required
+                           name="price" id="price"/></td>
+            </tr>
+            <tr>
+                <td>日期:</td>
+                <td><input type="date" class="easyui-validatebox" required
+                           name="pubdate" id="pubdate"/></td>
+            </tr>
+            <tr>
+                <td>面积:</td>
+                <td><input type="text" class="easyui-validatebox" required
+                           name="floorage" id="floorage"/></td>
+            </tr>
+            <tr>
+                <td>地区:</td>
+                <td>
+                    <input id="districtId" name="districtId" class="easyui-combobox" data-options="
+                        valueField: 'id',
+                        textField: 'name',
+                        url: '/owner/getAllDistrict',
+                        onSelect: function(rec){
+                        var url = '/owner/getStreetsByDistrictId?districtId='+rec.id;
+                        $('#streetId').combobox('reload', url);
+                        }"/>
+                </td>
+            </tr>
+            <tr>
+                <td>街道:</td>
+                <td>
+                    <input id="streetId" name="streetId" class="easyui-combobox" data-options="
+                        valueField:'id',textField:'name'"/>
+                </td>
+            </tr>
+            <tr>
+                <td>联系方式:</td>
+                <td><input type="text" class="easyui-validatebox" required
+                           name="contact" id="contact"/></td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <input id="houseImg" name="houseImg" class="easyui-filebox" style="width:300px"
+                           data-options="buttonText:'选择图片',buttonAlign:'left'">
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <img id="updimg" src="" alt="请上传图片">
+                </td>
+            </tr>
+        </table>
+    </form>
+
+</div>
+
+<div id="AddDialogButtons">
+    <a href="javascript:SaveDialog('#dg','#houseDialog','/owner/updateHouse')" class="easyui-linkbutton"
+       iconCls="icon-ok">保存</a> <a href="javascript:CloseDialog('#houseDialog')"
+                                   class="easyui-linkbutton" iconCls="icon-cancel">取消</a>
+</div>
+
+</body>
+<script type="text/javascript">
+    Date.prototype.Format = function(fmt)
+    { //author: meizz
+        var o = {
+            "M+" : this.getMonth()+1,                 //月份
+            "d+" : this.getDate(),                    //日
+            "h+" : this.getHours(),                   //小时
+            "m+" : this.getMinutes(),                 //分
+            "s+" : this.getSeconds(),                 //秒
+            "q+" : Math.floor((this.getMonth()+3)/3), //季度
+            "S"  : this.getMilliseconds()             //毫秒
+        };
+        if(/(y+)/.test(fmt))
+            fmt=fmt.replace(RegExp.$1, (this.getFullYear()+"").substr(4 - RegExp.$1.length));
+        for(var k in o)
+            if(new RegExp("("+ k +")").test(fmt))
+                fmt = fmt.replace(RegExp.$1, (RegExp.$1.length==1) ? (o[k]) : (("00"+ o[k]).substr((""+ o[k]).length)));
+        return fmt;
+    }
+</script>
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Insert title here</title>
+    <link rel="stylesheet" type="text/css" href="/easyUI/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="/easyUI/themes/icon.css">
+    <link rel="stylesheet" type="text/css" href="/easyUI/css/demo.css">
+    <script src="/js/jquery.min.js"></script>
+    <!--jquery.easyui.min.js包含了easyUI中的所有插件-->
+    <script src="/js/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="/js/MyEasyUICRUD.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $('#typeData').datagrid({
+                url:'/admin/getTypes',
+                toolbar:'#ToolBar',
+                pagination:true,
+                fitColumns:true,
+                fit:true,
+                rownumbers:true,
+                columns:[[
+                    {field:'cb',checkbox:'true',width:100},
+                    {field:'id',title:'ID',width:100},
+                    {field:'name',title:'类型名称',width:100},
+                ]]
+            });
+        })
+    </script>
+    <style>
+        body{
+            background-color: #f0f0f0;
+        }
+    </style>
+</head>
+<body>
+<table id="typeData"></table>
+<div id="ToolBar">
+    <div style="height: 40px;">
+        <a href="javascript:Add('addType','#typeDialog')" class="easyui-linkbutton"
+           iconCls="icon-add" plain="true">添加</a>
+        <a href="javascript:DeleteByFruitName('deleteTypes','#typeData')" class="easyui-linkbutton"
+            iconCls="icon-remove" plain="true">删除</a>
+    </div>
+</div>
+
+<div id="typeDialog" class="easyui-dialog" buttons="#AddDialogButtons"
+     style="width: 280px; height: 250px; padding: 10px 20px;" closed="true" closable="false">
+    <form id="ModiyDialogForm" method="post">
+        <table>
+            <tr hidden>
+                <td>ID:</td>
+                <td>
+                    <input type="text" name="id" id="id">
+                </td>
+            </tr>
+            <tr>
+                <td>房屋类型:</td>
+                <td><input id="cc" class="easyui-combobox" name="name"
+                           data-options="valueField:'id',textField:'name',url:'/admin/getAllTypes'" /> </td>
+            </tr>
+        </table>
+    </form>
+</div>
+
+<div id="AddDialogButtons">
+    <a href="javascript:SaveDialog('#typeData','#typeDialog')" class="easyui-linkbutton"
+       iconCls="icon-ok">保存</a> <a href="javascript:CloseDialog('#typeDialog')"
+                                   class="easyui-linkbutton" iconCls="icon-cancel">取消</a>
+</div>
+</body>
+</html>

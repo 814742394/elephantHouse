@@ -1,0 +1,87 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Insert title here</title>
+    <link rel="stylesheet" type="text/css" href="/easyUI/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="/easyUI/themes/icon.css">
+    <link rel="stylesheet" type="text/css" href="/easyUI/css/demo.css">
+    <script src="/js/jquery.min.js"></script>
+    <!--jquery.easyui.min.js包含了easyUI中的所有插件-->
+    <script src="/js/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="/js/MyEasyUICRUD.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $('#streetData').datagrid({
+                url:'/admin/getUsers',
+                toolbar:'#ToolBar',
+                pagination:true,
+                fitColumns:true,
+                fit:true,
+                rownumbers:true,
+                columns:[[
+                    {field:'id',title:'ID',width:100},
+                    {field:'name',title:'用户名称',width:100},
+                    {field:'telephone',title:'电话',width:100}
+                ]]
+            });
+        })
+        function query() {
+            var name_ = $("#name_").val();
+            var telephone_ = $("#telephone_").val();
+            $('#streetData').datagrid('load', {
+                name: name_,
+                telephone: telephone_
+            });
+        }
+    </script>
+    <style>
+        body{
+            background-color: #f0f0f0;
+        }
+    </style>
+</head>
+<body>
+<table id="streetData"></table>
+<div id="ToolBar">
+    <div style="height: 40px;">
+            用户名称：
+            <input id="name_" name="name_" class="easyui-textbox" style="width:150px">
+            电话：
+            <input id="telephone_" name="telephone_" class="easyui-textbox" style="width:150px">
+            <a id="btn" href="javascript:query()" class="easyui-linkbutton" data-options="iconCls:'icon-search'">查询</a>
+    </div>
+</div>
+
+<div id="streetDialog" class="easyui-dialog" buttons="#AddDialogButtons"
+     style="width: 280px; height: 250px; padding: 10px 20px;" closed="true" closable="false">
+    <form id="ModiyDialogForm" method="post">
+        <table>
+            <tr hidden>
+                <td>ID:</td>
+                <td>
+                    <input type="text" name="id" id="id">
+                </td>
+            </tr>
+            <tr>
+                <td>街道名称:</td>
+                <td><input type="text" class="easyui-validatebox" required
+                           name="name" id="name" /></td>
+            </tr>
+            <tr>
+                <td>选择区域:</td>
+                <td><input id="districtId" class="easyui-combobox" name="districtId"
+                           data-options="valueField:'id',textField:'name',url:'getAllDistrict'" />
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+
+<div id="AddDialogButtons">
+    <a href="javascript:SaveDialog('#streetData','#streetDialog')" class="easyui-linkbutton"
+       iconCls="icon-ok">保存</a> <a href="javascript:CloseDialog('#streetDialog')"
+                                   class="easyui-linkbutton" iconCls="icon-cancel">取消</a>
+</div>
+</body>
+</html>
